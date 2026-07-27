@@ -1,14 +1,15 @@
-# Affix Probability Calculator
+# Windblown's Affix Calculator
 
 A web UI for calculating affix probability combinations in Windblown.
 
-## Setup
-
-1. Update `scripts/fetch-wiki-data.js` 
-2. Run: `node scripts/fetch-wiki-data.js`
-3. Open `src/index.html` in your browser
-
 ## Data Sources
 
-- Weapons: [Wiki Link]
-- Affixes: [Wiki Link]
+- Weapons: https://windblown.wiki.gg/wiki/Module:Weapons/Data
+- Trinkets: https://windblown.wiki.gg/wiki/Module:Trinkets/Data
+- Affixes: https://windblown.wiki.gg/wiki/Module:Affixes/Data
+
+## Icon Resources
+
+- Weapons: https://windblown.wiki.gg/wiki/Category:Weapon_Icon_Images
+- Trinkets: https://windblown.wiki.gg/wiki/Category:Trinket_Icon_Images
+- Upgrades: https://windblown.wiki.gg/wiki/Category:Upgrade_Icon_Images
