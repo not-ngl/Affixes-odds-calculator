@@ -103,11 +103,18 @@ async function updateData() {
     console.log('Saved weapons.json');
   }
 
+  console.log('Fetching Module:Trinkets/Data...');
+  const trinketsLua = await fetchWikiModule(wikiUrl, 'Module:Trinkets/Data');
+  if (trinketsLua) {
+    const trinketsData = await luaToJson(trinketsLua); 
+    fs.writeFileSync('data/trinkets.json', JSON.stringify(trinketsData, null, 2));
+    console.log('Saved trinkets.json');
+  }
+
   console.log('Fetching Module:Affixes/Data...');
   const affixesLua = await fetchWikiModule(wikiUrl, 'Module:Affixes/Data');
   if (affixesLua) {
-    const affixesData = await luaToJson(affixesLua);  // ← Add await here
-    console.log('Parsed data:', JSON.stringify(affixesData).slice(0, 200)); // Debug log
+    const affixesData = await luaToJson(affixesLua);
     fs.writeFileSync('data/affixes.json', JSON.stringify(affixesData, null, 2));
     console.log('Saved affixes.json');
   }

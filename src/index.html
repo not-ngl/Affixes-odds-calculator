@@ -3,30 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Affix Probability Calculator</title>
+  <title>Windblown's Affix Calculator</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Affix Probability Calculator</h1>
+  <h1>Windblown's Affix Calculator</h1>
   
   <div class="calculator">
-    <label>Weapon:</label>
-    <select id="weaponSelect"></select>
+    <!-- Gear Type Selection -->
+    <div class="form-group">
+      <label for="gearTypeSelect"><strong>Gear Type:</strong></label>
+      <select id="gearTypeSelect">
+        <option value="">-- Select Gear Type --</option>
+        <option value="weapon">Weapon</option>
+        <option value="trinket">Trinket</option>
+      </select>
+    </div>
+
+    <!-- Gear Selection -->
+    <div class="form-group">
+      <label for="gearSelect"><strong>Gear:</strong></label>
+      <select id="gearSelect">
+        <option value="">-- Select Gear --</option>
+      </select>
+    </div>
     
-    <label>Level:</label>
-    <select id="levelSelect">
-      <option value="">-- Select Level --</option>
-      <option value="3">Level 3</option>
-      <option value="5">Level 5</option>
-      <option value="8">Level 8</option>
-      <option value="11">Level 11</option>
-    </select>
+    <!-- Level Selection -->
+    <div class="form-group">
+      <label for="levelInput"><strong>Level:</strong></label>
+      <input type="number" id="levelInput" min="1" placeholder="Enter level (e.g., 5)">
+      <small id="levelNote"></small>
+    </div>
+
+    <!-- Rare Affix Upgrades -->
+    <div class="form-group">
+      <label><strong>Rare Affixes Unlocked:</strong></label>
+      <input type="range" id="rareUpgradeLevel" min="0" max="3" value="3" step="1">
+      <div id="upgradeDisplay" class="upgrade-display"></div>
+    </div>
     
-    <label>Affixes:</label>
-    <div id="affixSelection"></div>
+    <!-- Affixes Selection -->
+    <div class="form-group">
+      <label><strong>Select Desired Affixes:</strong></label>
+      <div id="affixSelection"></div>
+      <small id="affixNote">Enter a level to see available affixes.</small>
+    </div>
     
+    <!-- Calculate Button -->
     <button id="calculateBtn">Calculate Probability</button>
-    <div id="result"></div>
+    
+    <!-- Results -->
+    <div id="result" class="result-container"></div>
   </div>
   
   <script src="app.js"></script>

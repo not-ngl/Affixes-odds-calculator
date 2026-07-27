@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@400;600;700&display=swap');
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Sofia Sans', sans-serif;
   max-width: 600px;
   margin: 50px auto;
   padding: 20px;
@@ -41,4 +43,90 @@ button:hover {
   margin-top: 20px;
   font-size: 18px;
   font-weight: bold;
+}
+
+#affixSelection {
+  margin: 15px 0;
+  padding: 10px;
+  background-color: #fafafa;
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+
+.affix-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rarity-group {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 0;
+}
+
+.rarity-group.common {
+  border-left: 4px solid #aaa;
+  background-color: #f9f9f9;
+}
+
+.rarity-group.uncommon {
+  border-left: 4px solid #0066ff;
+  background-color: #e6f0ff;
+}
+
+.rarity-group.rare {
+  border-left: 4px solid #ff6600;
+  background-color: #ffe6cc;
+}
+
+.rarity-group legend {
+  padding: 0 5px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.affix-label {
+  display: block;
+  margin: 8px 0;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.1s;
+}
+
+.affix-label:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.affix-label input {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.affix-label small {
+  display: block;
+  margin-left: 24px;
+  font-size: 12px;
+  color: #666;
+}
+
+.affix-checkbox:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.affix-checkbox:disabled + span {
+  opacity: 0.5;
+  color: #999;
+}
+
+.upgrade-display {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  padding: 10px;
+  background: #f5f5f5;
+  border-radius: 4px;
 }
