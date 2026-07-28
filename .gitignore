@@ -1,6 +1,9 @@
 # Dependencies
 node_modules/
 
+# Data cache
+data/*.json
+
 # Environment
 .env
 .env.local
