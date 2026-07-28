@@ -1,9 +1,12 @@
 {
-  "name": "aff",
+  "name": "WAC",
   "version": "1.0.0",
   "description": "A web UI for calculating affix probability combinations in Windblown.",
-  "main": "index.js",
+  "main": "src/app.js",
   "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "fetch-data": "node scripts/fetch-wiki-data.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +22,8 @@
   "dependencies": {
     "luaparse": "^0.3.1",
     "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
   }
 }

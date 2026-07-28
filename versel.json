@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/src/app.js" }
+  ],
+  "env": {
+    "NODE_VERSION": "18"
+  }
+}
