@@ -17,6 +17,13 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
+      - name: Fetch wiki data
+        run: node scripts/fetch-wiki-data.js
       - uses: actions/configure-pages@v5
       - name: Stage deploy folder
         run: |
