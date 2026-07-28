@@ -58,17 +58,17 @@ async function loadData() {
   try {
     console.log('Attempting to load JSON files...');
     
-    const weaponsResponse = await fetch('../data/weapons.json');
+    const weaponsResponse = await fetch('./data/weapons.json');
     console.log('Weapons fetch status:', weaponsResponse.status);
     if (!weaponsResponse.ok) throw new Error(`Weapons.json failed: ${weaponsResponse.status}`);
     
-    const affixesResponse = await fetch('../data/affixes.json');
-    console.log('Affixes fetch status:', affixesResponse.status);
-    if (!affixesResponse.ok) throw new Error(`Affixes.json failed: ${affixesResponse.status}`);
-    
-    const trinketsResponse = await fetch('../data/trinkets.json');
+    const trinketsResponse = await fetch('./data/trinkets.json');
     console.log('Trinkets fetch status:', trinketsResponse.status);
     if (!trinketsResponse.ok) throw new Error(`Trinkets.json failed: ${trinketsResponse.status}`);
+    
+    const affixesResponse = await fetch('./data/affixes.json');
+    console.log('Affixes fetch status:', affixesResponse.status);
+    if (!affixesResponse.ok) throw new Error(`Affixes.json failed: ${affixesResponse.status}`);
     
     const weaponsRaw = await weaponsResponse.json();
     const affixesRaw = await affixesResponse.json();
