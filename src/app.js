@@ -19,14 +19,11 @@
         const btn = document.getElementById('themeToggleBtn');
         if (!btn) return;
         
-//        const icon = btn.querySelector('.theme-icon');
         const label = btn.querySelector('.theme-label');
         
         if (theme === 'light') {
-//            icon.textContent = '';
             label.textContent = 'Switch to Dark';
         } else {
-//            icon.textContent = '';
             label.textContent = 'Switch to Light';
         }
     }
@@ -760,13 +757,13 @@ function formatProbabilitySignificant(prob) {
   // Ensures 2 significant figures after first non-zero digit
   let decimalPlaces;
   if (percentage >= 10) {
-    decimalPlaces = 0;
+    decimalPlaces = 2;
   } else if (percentage >= 1) {
-    decimalPlaces = 1;
+    decimalPlaces = 2;
   } else {
     // For small percentages, calculate dynamically
     const order = Math.floor(-Math.log10(percentage));
-    decimalPlaces = order + 1;
+    decimalPlaces = order + 2;
   }
   
   decimalPlaces = Math.max(0, decimalPlaces);
