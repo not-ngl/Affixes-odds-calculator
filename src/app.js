@@ -195,15 +195,6 @@ function setupEventListeners() {
     }
   });
 
-  // Legacy gear select listener (for compatibility if still used elsewhere)
-  const gearSelect = document.getElementById('gearSelect');
-  if (gearSelect) {
-    gearSelect.addEventListener('change', () => {
-      onGearChange();
-      calculateProbability();
-    });
-  }
-  
   const levelInput = document.getElementById('levelInput');
   if (levelInput) {
     levelInput.addEventListener('input', () => {
@@ -325,10 +316,8 @@ function selectGearTypeBox(type) {
   populateGearDropdown(type);
   
   // Reset level and affixes
-  //document.getElementById('levelInput').value = '';
   document.getElementById('affixSelection').innerHTML = '';
   document.getElementById('levelNote').textContent = '';
-  //document.getElementById('affixNote').textContent = 'Enter a level to see available affixes.';
   document.getElementById('result').innerHTML = '';
   
   console.log(`Gear type changed to: ${type}`);
@@ -542,7 +531,6 @@ function updateAffixDisplay() {
   const level = parseInt(levelInput, 10);
   if (isNaN(level) || level < 1) {
     affixContainer.innerHTML = '';
-    //affixNote.textContent = '';
     levelNote.textContent = '';
     return;
   }
@@ -608,7 +596,7 @@ function updateAffixDisplay() {
   
   let html = '<hr><div class="affix-list">';
   
-  // Combine Common + Uncommon into one group, keep Rare separate
+  // Group 
   const commonCount = byRarity['Common']?.length || 0;
   const uncommonCount = byRarity['Uncommon']?.length || 0;
   const rareCount = byRarity['Rare']?.length || 0;
@@ -653,7 +641,7 @@ function updateAffixDisplay() {
     html += '</fieldset>';
   }
   
-  // Display Rare separately
+  // Display Rare 
   if (rareCount > 0) {
     html += `<fieldset class="rarity-group rare">
       <legend>Rare (${rareCount})</legend>`;
@@ -733,15 +721,15 @@ function updateAffixDisplay() {
         const label = cb.closest('.affix-label');
         let shouldDisable = false;
         
-        // Rule 1: Upgrade 0 blocks all rares
+        // Upgrade 0 blocks all rares
         if (currentUpgradeLevel === 0 && cb.dataset.rarity === 'Rare') {
           shouldDisable = true;
         }
-        // Rule 2: Total slots exceeded (unchanged from original)
+        // Total slots exceeded (unchanged from original)
         else if (!cb.checked && checkedCount >= numSlots) {
           shouldDisable = true;
         }
-        // Rule 3: For upgrade 1-2, disable unchecked rares if one is already selected
+        // For upgrade 1-2, disable unchecked rares if one is already selected
         else if ((currentUpgradeLevel === 1 || currentUpgradeLevel === 2) && 
                  cb.dataset.rarity === 'Rare' && 
                  rareCheckedCount >= 1 && 
@@ -763,6 +751,40 @@ function updateAffixDisplay() {
 }
 
 // ===== PROBABILTY CALCULATION =====
+function formatProbabilitySignificant(prob) {
+  if (prob <= 0) return '0.00%';
+  if (prob >= 1) return '100%';
+  
+  const percentage = prob * 100;
+  
+  // Ensures 2 significant figures after first non-zero digit
+  let decimalPlaces;
+  if (percentage >= 10) {
+    decimalPlaces = 0;
+  } else if (percentage >= 1) {
+    decimalPlaces = 1;
+  } else {
+    // For small percentages, calculate dynamically
+    const order = Math.floor(-Math.log10(percentage));
+    decimalPlaces = order + 1;
+  }
+  
+  decimalPlaces = Math.max(0, decimalPlaces);
+  
+  // Ensure we don't exceed reasonable precision
+  decimalPlaces = Math.min(decimalPlaces, 6);
+  
+  return percentage.toFixed(decimalPlaces) + '%';
+}
+
+function formatRerollsRaw(prob) {
+  if (prob <= 0) return 'Infinity';
+  if (prob >= 1) return '1';
+  
+  const rerolls = 1 / prob;
+  return Math.round(rerolls).toLocaleString('en-US');
+}
+
 function calculateProbability() {
   const gearName = document.getElementById('gearSelect').value;
   const levelInput = document.getElementById('levelInput').value.trim();
@@ -836,12 +858,15 @@ function calculateProbability() {
       slotsAvailable, slotsSelected,
       NrAsked, NuAsked, NcAsked
     );
+
+    const formattedPercentage = formatProbabilitySignificant(prob);
+    const formattedRerolls = formatRerollsRaw(prob);
     
     const percentage = (prob * 100).toFixed(2);
     const rerolls = prob > 0 ? Math.round(1 / prob) : Infinity;
     
-    resultValue.textContent = percentage + '%';
-    resultRerolls.textContent = prob > 0 ? `(1 in ${rerolls} rerolls)` : '';
+    resultValue.textContent = formattedPercentage;
+    resultRerolls.textContent = prob > 0 ? `(1 in ${formattedRerolls} rerolls)` : '';
     return prob;
     
   } catch (error) {
