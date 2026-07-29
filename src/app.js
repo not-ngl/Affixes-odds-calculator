@@ -877,7 +877,7 @@ function initializeUpgradeBoxes() {
            role="button"
            aria-label="${upgrade.name}">
         ${upgrade.icon ? `<img src="${upgrade.icon}" alt="${upgrade.name}">` : ''}
-        <span class="upgrade-box-name">${upgrade.name}</span>
+        <!--<span class="upgrade-box-name">${upgrade.name}</span>-->
       </div>
     `;
   });
