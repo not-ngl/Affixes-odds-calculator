@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@400;600;700&display=swap');
 
 /* ========== THEME VARIABLES ========== */
-
-/* Dark Theme (Purple) - Default */
 .view-dark {
     --wiki-body-background-image: url("https://windblown.wiki.gg/images/Site-background-3.jpg?51ba32");
     --wiki-body-background-color: #343B4C;
@@ -20,10 +18,13 @@
     --wiki-accent-color--hover: #f544e6;
     --wiki-accent-label-color: #fff;
     --color--rare-affix: #ffd218;
+    --color--common-affix: #ffd9aa;
+    --color--common-affix-alpha: rgba(255, 217, 170, 0.15);
+    --color--rare-affix-alpha: rgba(255, 210, 24, 0.15);
     --table-border-image: url("https://windblown.wiki.gg/images/Table-border-purple.png?ec6e11&format=original");
+    --wiki-heading-font-family: 'Sofia Sans', sans-serif;
 }
 
-/* Light Theme (Blue) */
 .view-light {
     --wiki-body-background-image: url("https://windblown.wiki.gg/images/Site-background-2.jpg?7f1fa8");
     --wiki-body-background-color: #b9c0cf;
@@ -40,11 +41,15 @@
     --wiki-accent-color: #33adcc;
     --wiki-accent-color--hover: #44d2f5;
     --wiki-accent-label-color: #fff;
-    --color--rare-affix: #2581b0;
+    --color--common-affix: #c4a77d;
+    --color--rare-affix: #e69500;
+    --color--common-affix-alpha: rgba(196, 167, 125, 0.15);
+    --color--rare-affix-alpha: rgba(230, 149, 0, 0.15);
     --table-border-image: url("https://windblown.wiki.gg/images/Table-border-blue.png?b53582&format=original");
+    --wiki-heading-font-family: 'Sofia Sans', sans-serif;
 }
 
-/* ========== BODY ========== */
+/* ========== BASE ========== */
 body {
     font-family: 'Sofia Sans', sans-serif;
     max-width: 800px;
@@ -60,31 +65,16 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* ========== LOGO ========== */
-.logo-container {
-    text-align: center;
-}
-
-.main-logo {
-    max-width: 800px;
-    width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    filter: drop-shadow(0 0 8px rgba(var(--wiki-content-link-color--rgb), 0.3));
-}
-
-/* ========== FIXED HEADER RIBBON ========== */
+/* ========== LAYOUT ========== */
 .fixed-header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     height: 40px;
-    background-color: rgba(var(--wiki-content-background-color--rgb), 0.95);
+    background-color: rgba(var(--wiki-content-background-color--rgb), 0.75);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--wiki-content-border-color);
     z-index: 2000;
     display: flex;
     justify-content: space-between;
@@ -94,60 +84,10 @@ body {
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* ========== THEME TOGGLE BUTTON ========== */
-.theme-toggle {
-    position: static;
-    z-index: 2001;
+.logo-container {
+    text-align: center;
 }
 
-.theme-btn {
-    background-color: var(--wiki-accent-color);
-    color: var(--wiki-accent-label-color);
-    border: 2px solid var(--wiki-content-border-color);
-    padding: 4px 8px;
-    cursor: pointer;
-    font-family: 'Sofia Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--wiki-content-text-color);
-    transition: all 0.2s ease;
-    white-space: nowrap;
-}
-
-.theme-btn:hover {
-    background-color: var(--wiki-accent-color--hover);
-    transform: translateY(-1px);
-}
-
-.theme-btn:active {
-    transform: translateY(0);
-}
-
-.theme-icon {
-    font-size: 18px;
-}
-
-/* ========== INVERT FILTERS FOR THEMES ========== */
-.invert-on-light {
-    filter: none;
-}
-
-.view-light .invert-on-light {
-    filter: hue-rotate(190deg) invert();
-}
-
-.invert-on-dark {
-    filter: none;
-}
-
-.view-dark .invert-on-dark {
-    filter: hue-rotate(190deg) invert();
-}
-
-/* ========== CALCULATOR CONTAINER ========== */
 .calculator {
     background-color: rgba(var(--wiki-content-background-color--rgb), var(--wiki-content-background-opacity));
     border: 1px solid var(--wiki-content-border-color);
@@ -162,143 +102,6 @@ body {
     margin-bottom: 60px;
 }
 
-/* ========== FORM ELEMENTS ========== */
-label {
-    display: block;
-    margin-top: 15px;
-    font-weight: 600;
-    color: var(--wiki-content-heading-color);
-}
-
-select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    background-color: var(--wiki-content-background-color--secondary);
-    border: 1px solid var(--wiki-content-border-color);
-    color: var(--wiki-content-text-color);
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-    transition: all 0.2s ease;
-}
-
-select:focus {
-    border-color: var(--wiki-content-link-color);
-    outline: none;
-    box-shadow: 0 0 0 1px var(--wiki-content-link-color);
-}
-
-small {
-    color: var(--wiki-content-text-mix-color);
-    display: block;
-/*    margin-top: 5px;*/
-}
-
-/* ========== AFFIX SELECTION ========== */
-#affixSelection {
-    transition: background-color 0.3s ease;
-}
-
-.rarity-group {
-    border: 1px solid var(--wiki-content-border-color);
-    margin: 0 0 10px 0; /* Added bottom margin for spacing */
-    transition: border-color 0.3s ease;
-}
-
-.rarity-group.common-uncommon {
-    border-left: 4px solid #aaa; /* Grey for common/uncommon mix */
-    background-color: var(--wiki-content-background-color);
-    -webkit-backdrop-filter: blur(2px);
-}
-
-.rarity-group.rare {
-    border-left: 4px solid var(--color--rare-affix);
-    background-color: rgba(255, 210, 24, 0.1);
-    -webkit-backdrop-filter: blur(2px);
-}
-
-.rarity-group legend {
-    padding: 0 5px;
-    font-weight: 600;
-    font-size: 13px;
-    color: var(--wiki-content-heading-color);
-    font-family: var(--wiki-heading-font-family);
-}
-
-.affix-label {
-    display: block;
-    margin: 8px 0;
-    padding: 2px;
-    cursor: pointer;
-    transition: background-color 0.1s;
-    color: var(--wiki-content-text-color);
-}
-
-.affix-label:hover {
-    background-color: rgba(var(--wiki-content-link-color--rgb), 0.15);
-}
-
-/* ========== UPGRADE & GEAR BOXES ========== */
-.upgrade-box-name { font-size: 12px; font-weight: 600; line-height: 1.2; word-break: keep-all; /* Prevent awkward line breaks */ }
-.upgrade-selection,
-.gear-type-selection {
-    display: flex;
-    flex-direction: row;
-    column-gap: 5px;
-    margin-bottom: 5px;
-    width: 100%;
-    height: 75px;
-}
-
-.upgrade-box,
-.gear-type-box {
-    flex: 1;
-    padding: 12px 8px;
-    background-color: var(--wiki-content-background-color);
-    border: 2px solid var(--wiki-content-border-color);
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-width: 0;
-    color: var(--wiki-content-text-color);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-}
-
-.upgrade-box:hover,
-.gear-type-box:hover {
-    background-color: var(--wiki-content-background-color--secondary);
-    border-color: var(--wiki-content-link-color);
-}
-
-.upgrade-box.selected,
-.gear-type-box.selected {
-    background-color: rgba(var(--wiki-content-link-color--rgb), 0.2);
-    border-color: var(--wiki-content-link-color);
-    border-bottom-color: var(--wiki-accent-color);
-    box-shadow: 0 2px 6px rgba(var(--wiki-content-link-color--rgb), 0.25);
-}
-
-.upgrade-box-name,
-.gear-type-box-name {
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.2;
-    font-family: var(--wiki-heading-font-family);
-}
-.upgrade-box img { height: 32px; margin-bottom: 6px; display: none; }
-
-.upgrade-box.has-icon img { display: block; }
-.gear-type-box img { height: 32px; margin-bottom: 6px; display: block; }
-
-.gear-type-box img.invert-on-light {
-}
-
-/* ========== STICKY FOOTER ========== */
 .sticky-result {
     position: fixed;
     bottom: 0;
@@ -314,6 +117,12 @@ small {
     z-index: 1000;
     text-align: center;
     transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.result-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .result-label {
@@ -334,7 +143,128 @@ small {
     color: var(--wiki-content-text-mix-color);
 }
 
-/* ========== CUSTOM GEAR SELECTOR ========== */
+.copyright-notice {
+    font-size: 10px;
+    color: var(--wiki-content-text-mix-color);
+    opacity: 0.8;
+    margin-top: 8px;
+    line-height: 1.3;
+}
+
+.copyright-notice a {
+    color: var(--wiki-content-link-color);
+    text-decoration: none;
+}
+
+.copyright-notice a:hover {
+    text-decoration: underline;
+    opacity: 1;
+}
+
+/* ========== THEME TOGGLE ========== */
+.theme-toggle {
+    position: static;
+    z-index: 2001;
+}
+
+.theme-btn {
+    background-color: var(--wiki-accent-color);
+    color: var(--wiki-accent-label-color);
+    border: 2px solid var(--wiki-content-border-color);
+    padding: 4px 8px;
+    cursor: pointer;
+    font-family: 'Sofia Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.theme-btn:hover {
+    background-color: var(--wiki-accent-color--hover);
+    transform: translateY(-1px);
+}
+
+.theme-btn:active {
+    transform: translateY(0);
+}
+
+.theme-label {
+    color: var(--wiki-content-text-color);
+}
+
+/* ========== INVERT FILTERS ========== */
+.invert-on-light {
+    filter: none;
+}
+
+.view-light .invert-on-light {
+    filter: hue-rotate(190deg) invert();
+}
+
+.invert-on-dark {
+    filter: none;
+}
+
+.view-dark .invert-on-dark {
+    filter: hue-rotate(190deg) invert();
+}
+
+/* ========== FORM ELEMENTS ========== */
+small {
+    color: var(--wiki-content-text-mix-color);
+    display: block;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-group.half-width {
+    flex: 1;
+}
+
+.level-input {
+    width: 100%;
+    padding: 8px 12px;
+    background-color: var(--wiki-content-background-color--secondary);
+    border: 2px solid var(--wiki-content-border-color);
+    color: var(--wiki-content-text-color);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    font-family: 'Sofia Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    height: 75px;
+    box-sizing: border-box;
+}
+
+.level-input:focus {
+    border-color: var(--wiki-content-link-color);
+    outline: none;
+}
+
+.level-input::placeholder {
+    color: var(--wiki-content-text-mix-color);
+}
+
+hr {
+    border: none;
+    border-top: 2px solid var(--wiki-content-border-color);
+    margin: 20px 0;
+}
+
+/* ========== GEAR SELECTOR ========== */
 .custom-gear-selector {
     position: relative;
     width: 100%;
@@ -464,63 +394,246 @@ small {
     white-space: nowrap;
 }
 
-/* ========== FORM LAYOUT ========== */
-.form-row {
+/* ========== UPGRADE BOXES ========== */
+.upgrade-selection {
     display: flex;
     flex-direction: row;
-    gap: 5px;
-}
-
-.form-group.half-width {
-    flex: 1;
-}
-
-/* ========== LEVEL INPUT STYLING ========== */
-.level-input {
+    column-gap: 5px;
+    margin-bottom: 5px;
     width: 100%;
-    padding: 8px 12px;
-    background-color: var(--wiki-content-background-color--secondary);
+    height: 75px;
+}
+
+.upgrade-box {
+    flex: 1;
+    padding: 12px 8px;
+    background-color: var(--wiki-content-background-color);
     border: 2px solid var(--wiki-content-border-color);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
     color: var(--wiki-content-text-color);
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-    font-family: 'Sofia Sans', sans-serif;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+
+.upgrade-box:hover {
+    background-color: var(--wiki-content-background-color--secondary);
+    border-color: var(--wiki-content-link-color);
+}
+
+.upgrade-box.selected {
+    background-color: rgba(var(--wiki-content-link-color--rgb), 0.2);
+    border-color: var(--wiki-content-link-color);
+    border-bottom-color: var(--wiki-accent-color);
+    box-shadow: 0 2px 6px rgba(var(--wiki-content-link-color--rgb), 0.25);
+}
+
+.upgrade-box img {
+    height: 32px;
+    margin-bottom: 6px;
+    display: none;
+}
+
+.upgrade-box.has-icon img {
+    display: block;
+}
+
+.upgrade-box-name {
     font-size: 16px;
     font-weight: 600;
-    transition: all 0.2s ease;
+    line-height: 1.2;
+    word-break: keep-all;
+}
+
+/* ========== GEAR TYPE BOXES ========== */
+.gear-type-selection {
+    display: flex;
+    flex-direction: row;
+    column-gap: 5px;
+    margin-bottom: 5px;
+    width: 100%;
     height: 75px;
-    box-sizing: border-box;
 }
 
-.level-input:focus {
+.gear-type-box {
+    flex: 1;
+    padding: 12px 8px;
+    background-color: var(--wiki-content-background-color);
+    border: 2px solid var(--wiki-content-border-color);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    color: var(--wiki-content-text-color);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+
+.gear-type-box:hover {
+    background-color: var(--wiki-content-background-color--secondary);
     border-color: var(--wiki-content-link-color);
-    outline: none;
 }
 
-.level-input::placeholder {
-    color: var(--wiki-content-text-mix-color);
+.gear-type-box.selected {
+    background-color: rgba(var(--wiki-content-link-color--rgb), 0.2);
+    border-color: var(--wiki-content-link-color);
+    border-bottom-color: var(--wiki-accent-color);
+    box-shadow: 0 2px 6px rgba(var(--wiki-content-link-color--rgb), 0.25);
 }
 
-hr {
-    border: none;
-    border-top: 2px solid var(--wiki-content-border-color);
-    margin: 20px 0;
+.gear-type-box img {
+    height: 32px;
+    margin-bottom: 6px;
+    display: block;
 }
 
-.copyright-notice {
-    font-size: 10px;
-    color: var(--wiki-content-text-mix-color);
-    opacity: 0.6;
-    margin-top: 8px;
-    line-height: 1.3;
+.gear-type-box-name {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.2;
+    font-family: var(--wiki-heading-font-family);
 }
 
-.copyright-notice a {
-    color: var(--wiki-content-link-color);
-    text-decoration: none;
+/* ========== AFFIX LIST ========== */
+#affixSelection {
+    transition: background-color 0.3s ease;
 }
 
-.copyright-notice a:hover {
-    text-decoration: underline;
-    opacity: 1;
+.rarity-group {
+    border: 1px solid var(--wiki-content-border-color);
+    margin: 0 0 10px 0;
+    transition: border-color 0.3s ease;
+}
+
+.rarity-group.common-uncommon {
+    border-left: 4px solid var(--color--common-affix);
+    background-color: var(--color--common-affix-alpha);
+}
+
+.rarity-group.rare {
+    border-left: 4px solid var(--color--rare-affix);
+    background-color: var(--color--rare-affix-alpha);
+}
+
+.rarity-group legend {
+    padding: 0 5px;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--wiki-content-heading-color);
+    font-family: var(--wiki-heading-font-family);
+}
+
+.affix-label {
+    display: block;
+    margin: 8px 0;
+    padding: 2px 0 2px 12px;
+    cursor: pointer;
+    transition: background-color 0.1s;
+    color: var(--wiki-content-text-color);
+    min-height: 24px;
+    line-height: 1.4;
+    position: relative;
+}
+
+.affix-label:hover {
+    background-color: rgba(var(--wiki-content-link-color--rgb), 0.15);
+}
+
+.affix-label.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: transparent;
+}
+
+/* ========== CUSTOM CHECKBOXES ========== */
+input[type="checkbox"].affix-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 8px;
+    vertical-align: middle;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+    position: relative;
+    background-color: transparent;
+}
+
+input[type="checkbox"].affix-checkbox:disabled {
+    background-color: transparent;
+    cursor: not-allowed;
+}
+
+/* Commons - Diamond */
+.view-dark input[type="checkbox"].affix-checkbox[data-rarity="Common"],
+.view-dark input[type="checkbox"].affix-checkbox[data-rarity="Uncommon"] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23ffd9aa' stroke-width='2' d='M12 2L22 12L12 22L2 12Z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.view-dark input[type="checkbox"].affix-checkbox[data-rarity="Common"]:checked,
+.view-dark input[type="checkbox"].affix-checkbox[data-rarity="Uncommon"]:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffd9aa' stroke='%23ffd9aa' d='M12 2L22 12L12 22L2 12Z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.view-light input[type="checkbox"].affix-checkbox[data-rarity="Common"],
+.view-light input[type="checkbox"].affix-checkbox[data-rarity="Uncommon"] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23c4a77d' stroke-width='2' d='M12 2L22 12L12 22L2 12Z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.view-light input[type="checkbox"].affix-checkbox[data-rarity="Common"]:checked,
+.view-light input[type="checkbox"].affix-checkbox[data-rarity="Uncommon"]:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23c4a77d' stroke='%23c4a77d' d='M12 2L22 12L12 22L2 12Z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Rare - Star */
+.view-dark input[type="checkbox"].affix-checkbox[data-rarity="Rare"] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23ffd218' stroke-width='2' d='M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.view-dark input[type="checkbox"].affix-checkbox[data-rarity="Rare"]:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffd218' stroke='none' d='M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.view-light input[type="checkbox"].affix-checkbox[data-rarity="Rare"] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23e69500' stroke-width='2' d='M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.view-light input[type="checkbox"].affix-checkbox[data-rarity="Rare"]:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23e69500' stroke='none' d='M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
