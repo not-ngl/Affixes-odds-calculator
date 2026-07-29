@@ -7,55 +7,68 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Windblown's Affix Calculator</h1>
+  <div class="fixed-header">
+    <div class="logo-container">
+      <img src="../assets/wac-logo.png" alt="Windblown" style="height:40px; margin-top:6px" />
+    </div>
+    <div class="theme-toggle">
+      <button id="themeToggleBtn" class="theme-btn" aria-label="Toggle theme">
+        <span class="theme-label">Switch to Light</span>
+      </button>
+    </div>
+  </div>
+
   
   <div class="calculator">
-    <!-- Gear Type Selection -->
-    <div class="form-group">
-      <label for="gearTypeSelect"><strong>Gear Type:</strong></label>
-      <select id="gearTypeSelect">
-        <option value="">-- Select Gear Type --</option>
-        <option value="weapon">Weapon</option>
-        <option value="trinket">Trinket</option>
-      </select>
-    </div>
-
-    <!-- Gear Selection -->
-    <div class="form-group">
-      <label for="gearSelect"><strong>Gear:</strong></label>
-      <select id="gearSelect">
-        <option value="">-- Select Gear --</option>
-      </select>
-    </div>
-    
-    <!-- Level Selection -->
-    <div class="form-group">
-      <label for="levelInput"><strong>Level:</strong></label>
-      <input type="number" id="levelInput" min="1" placeholder="Enter level (e.g., 5)">
-      <small id="levelNote"></small>
-    </div>
-
     <!-- Rare Affix Upgrades -->
     <div class="form-group">
-      <label><strong>Rare Affixes Unlocked:</strong></label>
-      <input type="range" id="rareUpgradeLevel" min="0" max="3" value="3" step="1">
-      <div id="upgradeDisplay" class="upgrade-display"></div>
+      <div id="upgradeSelection" class="upgrade-selection"></div>
     </div>
     
+    <!-- Gear Type Selection -->
+    <div class="form-group">
+      <div id="gearTypeSelection" class="gear-type-selection"></div>
+    </div>
+
+    <!-- Gear and Level Selection (Side by Side) -->
+    <div class="form-row">
+      <div class="form-group half-width">
+        <div class="custom-gear-selector">
+          <button type="button" id="gearSelectButton" class="gear-select-button" aria-haspopup="listbox" aria-expanded="false">
+            <span id="gearSelectIcon" class="gear-icon"></span>
+            <span id="gearSelectLabel" class="gear-label">Fetching icons from the wiki...</span>
+            <span class="dropdown-arrow">▼</span>
+          </button>
+          <div id="gearSelectDropdown" class="gear-dropdown" role="listbox" hidden>
+          </div>
+          <input type="hidden" id="gearSelect" value="">
+        </div>
+      </div>
+    
+      <div class="form-group half-width">
+        <input type="number" id="levelInput" min="1" class="level-input" placeholder="Enter level (e.g., 5)">
+	<small id="levelNote"></small>
+      </div>
+    </div>
+
     <!-- Affixes Selection -->
     <div class="form-group">
-      <label><strong>Select Desired Affixes:</strong></label>
       <div id="affixSelection"></div>
-      <small id="affixNote">Enter a level to see available affixes.</small>
     </div>
     
-    <!-- Calculate Button -->
-    <button id="calculateBtn">Calculate Probability</button>
+    <!-- Sticky Bottom Result Box -->
+    <div id="stickyResult" class="sticky-result">
+      <div class="result-content">
+        <span class="result-label">Your Choice Odds:</span>
+        <span id="resultValue" class="result-value">-</span>
+	<span id="resultRerolls" class="result-rerolls"></span>
+      </div>
+    </div>
     
     <!-- Results -->
     <div id="result" class="result-container"></div>
   </div>
-  
+  <script src="probability.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

@@ -1,132 +1,509 @@
 @import url('https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@400;600;700&display=swap');
 
+/* ========== THEME VARIABLES ========== */
+
+/* Dark Theme (Purple) - Default */
+.view-dark {
+    --wiki-body-background-image: url("https://windblown.wiki.gg/images/Site-background-3.jpg?51ba32");
+    --wiki-body-background-color: #343B4C;
+    --wiki-content-background-color: #0B0B28;
+    --wiki-content-background-color--rgb: 11, 11, 40;
+    --wiki-content-background-color--secondary: #1A0B28;
+    --wiki-content-background-opacity: 0.9;
+    --wiki-content-border-color: #9432a1;
+    --wiki-content-text-color: #D5F4F5;
+    --wiki-content-text-mix-color: #7e8791;
+    --wiki-content-heading-color: #3bd2d4;
+    --wiki-content-link-color: #F2009D;
+    --wiki-content-link-color--rgb: 242, 0, 157;
+    --wiki-accent-color: #cc33ba;
+    --wiki-accent-color--hover: #f544e6;
+    --wiki-accent-label-color: #fff;
+    --color--rare-affix: #ffd218;
+    --table-border-image: url("https://windblown.wiki.gg/images/Table-border-purple.png?ec6e11&format=original");
+}
+
+/* Light Theme (Blue) */
+.view-light {
+    --wiki-body-background-image: url("https://windblown.wiki.gg/images/Site-background-2.jpg?7f1fa8");
+    --wiki-body-background-color: #b9c0cf;
+    --wiki-content-background-color: #ffffff;
+    --wiki-content-background-color--rgb: 255, 255, 255;
+    --wiki-content-background-color--secondary: #f7ebfa;
+    --wiki-content-background-opacity: 0.95;
+    --wiki-content-border-color: #11aad9;
+    --wiki-content-text-color: #111111;
+    --wiki-content-text-mix-color: #7e8791;
+    --wiki-content-heading-color: #d94ec2;
+    --wiki-content-link-color: #00bdc7;
+    --wiki-content-link-color--rgb: 0, 189, 199;
+    --wiki-accent-color: #33adcc;
+    --wiki-accent-color--hover: #44d2f5;
+    --wiki-accent-label-color: #fff;
+    --color--rare-affix: #2581b0;
+    --table-border-image: url("https://windblown.wiki.gg/images/Table-border-blue.png?b53582&format=original");
+}
+
+/* ========== BODY ========== */
 body {
-  font-family: 'Sofia Sans', sans-serif;
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 20px;
+    font-family: 'Sofia Sans', sans-serif;
+    max-width: 800px;
+    margin: 25px auto;
+    padding: 10px;
+    background-image: var(--wiki-body-background-image);
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: var(--wiki-body-background-color);
+    color: var(--wiki-content-text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* ========== LOGO ========== */
+.logo-container {
+    text-align: center;
+}
+
+.main-logo {
+    max-width: 800px;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 0 8px rgba(var(--wiki-content-link-color--rgb), 0.3));
+}
+
+/* ========== FIXED HEADER RIBBON ========== */
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background-color: rgba(var(--wiki-content-background-color--rgb), 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--wiki-content-border-color);
+    z-index: 2000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ========== THEME TOGGLE BUTTON ========== */
+.theme-toggle {
+    position: static;
+    z-index: 2001;
+}
+
+.theme-btn {
+    background-color: var(--wiki-accent-color);
+    color: var(--wiki-accent-label-color);
+    border: 2px solid var(--wiki-content-border-color);
+    padding: 4px 8px;
+    cursor: pointer;
+    font-family: 'Sofia Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--wiki-content-text-color);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.theme-btn:hover {
+    background-color: var(--wiki-accent-color--hover);
+    transform: translateY(-1px);
+}
+
+.theme-btn:active {
+    transform: translateY(0);
+}
+
+.theme-icon {
+    font-size: 18px;
+}
+
+/* ========== INVERT FILTERS FOR THEMES ========== */
+.invert-on-light {
+    filter: none;
+}
+
+.view-light .invert-on-light {
+    filter: hue-rotate(190deg) invert();
+}
+
+.invert-on-dark {
+    filter: none;
+}
+
+.view-dark .invert-on-dark {
+    filter: hue-rotate(190deg) invert();
+}
+
+/* ========== CALCULATOR CONTAINER ========== */
 .calculator {
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 8px;
+    background-color: rgba(var(--wiki-content-background-color--rgb), var(--wiki-content-background-opacity));
+    border: 1px solid var(--wiki-content-border-color);
+    border-image-source: var(--table-border-image);
+    border-image-slice: 30;
+    border-image-repeat: repeat;
+    border-image-width: 9px;
+    padding: 20px;
+    box-shadow: 0 0 16px rgb(0 0 0/75%) inset, 0 0 15px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    margin-top: 20px;
+    margin-bottom: 50px;
 }
 
+/* ========== FORM ELEMENTS ========== */
 label {
-  display: block;
-  margin-top: 15px;
-  font-weight: bold;
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+    color: var(--wiki-content-heading-color);
 }
 
 select {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    background-color: var(--wiki-content-background-color--secondary);
+    border: 1px solid var(--wiki-content-border-color);
+    color: var(--wiki-content-text-color);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    transition: all 0.2s ease;
 }
 
-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+select:focus {
+    border-color: var(--wiki-content-link-color);
+    outline: none;
+    box-shadow: 0 0 0 1px var(--wiki-content-link-color);
 }
 
-button:hover {
-  background-color: #0056b3;
+small {
+    color: var(--wiki-content-text-mix-color);
+    display: block;
+    margin-top: 5px;
 }
 
-#result {
-  margin-top: 20px;
-  font-size: 18px;
-  font-weight: bold;
-}
-
+/* ========== AFFIX SELECTION ========== */
 #affixSelection {
-  margin: 15px 0;
-  padding: 10px;
-  background-color: #fafafa;
-  border-radius: 4px;
-  border: 1px solid #eee;
-}
-
-.affix-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    transition: background-color 0.3s ease;
 }
 
 .rarity-group {
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 10px;
-  margin: 0;
+    border: 1px solid var(--wiki-content-border-color);
+    margin: 0 0 10px 0; /* Added bottom margin for spacing */
+    transition: border-color 0.3s ease;
 }
 
-.rarity-group.common {
-  border-left: 4px solid #aaa;
-  background-color: #f9f9f9;
-}
-
-.rarity-group.uncommon {
-  border-left: 4px solid #0066ff;
-  background-color: #e6f0ff;
+.rarity-group.common-uncommon {
+    border-left: 4px solid #aaa; /* Grey for common/uncommon mix */
+    background-color: var(--wiki-content-background-color);
+    -webkit-backdrop-filter: blur(2px);
 }
 
 .rarity-group.rare {
-  border-left: 4px solid #ff6600;
-  background-color: #ffe6cc;
+    border-left: 4px solid var(--color--rare-affix);
+    background-color: rgba(255, 210, 24, 0.1);
+    -webkit-backdrop-filter: blur(2px);
 }
 
 .rarity-group legend {
-  padding: 0 5px;
-  font-weight: 600;
-  font-size: 13px;
+    padding: 0 5px;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--wiki-content-heading-color);
+    font-family: var(--wiki-heading-font-family);
 }
 
 .affix-label {
-  display: block;
-  margin: 8px 0;
-  padding: 5px;
-  cursor: pointer;
-  border-radius: 3px;
-  transition: background-color 0.1s;
+    display: block;
+    margin: 8px 0;
+    padding: 2px;
+    cursor: pointer;
+    transition: background-color 0.1s;
+    color: var(--wiki-content-text-color);
 }
 
 .affix-label:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(var(--wiki-content-link-color--rgb), 0.15);
 }
 
-.affix-label input {
-  margin-right: 8px;
-  cursor: pointer;
+/* ========== UPGRADE & GEAR BOXES ========== */
+.upgrade-box-name { font-size: 12px; font-weight: 600; line-height: 1.2; word-break: keep-all; /* Prevent awkward line breaks */ }
+.upgrade-selection,
+.gear-type-selection {
+    display: flex;
+    flex-direction: row;
+    column-gap: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+    height: 75px;
 }
 
-.affix-label small {
-  display: block;
-  margin-left: 24px;
-  font-size: 12px;
-  color: #666;
+.upgrade-box,
+.gear-type-box {
+    flex: 1;
+    padding: 12px 8px;
+    background-color: var(--wiki-content-background-color);
+    border: 2px solid var(--wiki-content-border-color);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    color: var(--wiki-content-text-color);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
 }
 
-.affix-checkbox:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
+.upgrade-box:hover,
+.gear-type-box:hover {
+    background-color: var(--wiki-content-background-color--secondary);
+    border-color: var(--wiki-content-link-color);
 }
 
-.affix-checkbox:disabled + span {
-  opacity: 0.5;
-  color: #999;
+.upgrade-box.selected,
+.gear-type-box.selected {
+    background-color: rgba(var(--wiki-content-link-color--rgb), 0.2);
+    border-color: var(--wiki-content-link-color);
+    border-bottom-color: var(--wiki-accent-color);
+    box-shadow: 0 2px 6px rgba(var(--wiki-content-link-color--rgb), 0.25);
 }
 
-.upgrade-display {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  padding: 10px;
-  background: #f5f5f5;
-  border-radius: 4px;
+.upgrade-box-name,
+.gear-type-box-name {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.2;
+    font-family: var(--wiki-heading-font-family);
+}
+.upgrade-box img { height: 32px; margin-bottom: 6px; display: none; }
+
+.upgrade-box.has-icon img { display: block; }
+.gear-type-box img { height: 32px; margin-bottom: 6px; display: block; }
+
+.gear-type-box img.invert-on-light {
+}
+
+/* ========== STICKY FOOTER ========== */
+.sticky-result {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(var(--wiki-content-background-color--rgb), var(--wiki-content-background-opacity));
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-top: 2px solid var(--wiki-accent-color);
+    color: var(--wiki-content-text-color);
+    padding: 15px 20px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.75);
+    z-index: 1000;
+    text-align: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.result-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--wiki-content-text-mix-color);
+}
+
+.result-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--wiki-content-link-color);
+    text-shadow: 0 0 5px rgba(var(--wiki-content-link-color--rgb), 0.5);
+}
+
+.result-rerolls {
+    font-size: 16px;
+    color: var(--wiki-content-text-mix-color);
+}
+
+/* ========== CUSTOM GEAR SELECTOR ========== */
+.custom-gear-selector {
+    position: relative;
+    width: 100%;
+}
+
+.gear-select-button {
+    width: 100%;
+    padding: 8px 12px;
+    background-color: var(--wiki-content-background-color--secondary);
+    border: 2px solid var(--wiki-content-border-color);
+    color: var(--wiki-content-text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Sofia Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: left;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    height: 75px;
+}
+
+.gear-select-button:hover {
+    border-color: var(--wiki-content-link-color);
+    background-color: var(--wiki-content-background-color);
+}
+
+.gear-select-button:focus {
+    outline: none;
+    border-color: var(--wiki-content-link-color);
+}
+
+.gear-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gear-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.gear-label {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dropdown-arrow {
+    color: var(--wiki-content-text-mix-color);
+    font-size: 12px;
+    transition: transform 0.2s ease;
+}
+
+.gear-select-button[aria-expanded="true"] .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.gear-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 4px;
+    max-height: 500px;
+    overflow-y: auto;
+    background-color: var(--wiki-content-background-color);
+    border: 2px solid var(--wiki-content-border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.gear-option {
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.15s ease;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+    font-size: inherit;
+    color: var(--wiki-content-text-color);
+}
+
+.gear-option:hover,
+.gear-option:focus {
+    background-color: rgba(var(--wiki-content-link-color--rgb), 0.15);
+    outline: none;
+}
+
+.gear-option.selected {
+    background-color: rgba(var(--wiki-content-link-color--rgb), 0.25);
+    border-left: 2px solid var(--wiki-content-link-color);
+}
+
+.gear-option .option-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.gear-option .option-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.gear-option .option-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ========== FORM LAYOUT ========== */
+.form-row {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+.form-group.half-width {
+    flex: 1;
+}
+
+/* ========== LEVEL INPUT STYLING ========== */
+.level-input {
+    width: 100%;
+    padding: 8px 12px;
+    background-color: var(--wiki-content-background-color--secondary);
+    border: 2px solid var(--wiki-content-border-color);
+    color: var(--wiki-content-text-color);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    font-family: 'Sofia Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    height: 75px;
+    box-sizing: border-box;
+}
+
+.level-input:focus {
+    border-color: var(--wiki-content-link-color);
+    outline: none;
+}
+
+.level-input::placeholder {
+    color: var(--wiki-content-text-mix-color);
+}
+
+hr {
+    border: none;
+    border-top: 2px solid var(--wiki-content-border-color);
+    margin: 20px 0;
 }
