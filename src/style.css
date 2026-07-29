@@ -506,3 +506,21 @@ hr {
     border-top: 2px solid var(--wiki-content-border-color);
     margin: 20px 0;
 }
+
+.copyright-notice {
+    font-size: 10px;
+    color: var(--wiki-content-text-mix-color);
+    opacity: 0.6;
+    margin-top: 8px;
+    line-height: 1.3;
+}
+
+.copyright-notice a {
+    color: var(--wiki-content-link-color);
+    text-decoration: none;
+}
+
+.copyright-notice a:hover {
+    text-decoration: underline;
+    opacity: 1;
+}
