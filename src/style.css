@@ -191,7 +191,7 @@ select:focus {
 small {
     color: var(--wiki-content-text-mix-color);
     display: block;
-    margin-top: 5px;
+/*    margin-top: 5px;*/
 }
 
 /* ========== AFFIX SELECTION ========== */
@@ -408,7 +408,7 @@ small {
     left: 0;
     right: 0;
     margin-top: 4px;
-    max-height: 500px;
+    max-height: 300px;
     overflow-y: auto;
     background-color: var(--wiki-content-background-color);
     border: 2px solid var(--wiki-content-border-color);
