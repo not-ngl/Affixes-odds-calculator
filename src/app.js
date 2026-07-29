@@ -863,9 +863,9 @@ function initializeUpgradeBoxes() {
   
   const upgrades = [
     { name: 'None', icon: null },
-    { name: 'Rare Affixes I', icon: 'https://windblown.wiki.gg/images/Rare_Affixes_I_Upgrade_Icon.png?63b43a=&format=original' },
-    { name: 'Rare Affixes II', icon: 'https://windblown.wiki.gg/images/Rare_Affixes_II_Upgrade_Icon.png?1b9389=&format=original' },
-    { name: 'Rare Affixes III', icon: 'https://windblown.wiki.gg/images/Rare_Affixes_III_Upgrade_Icon.png?72a677=&format=original' }
+    { name: '', icon: 'https://windblown.wiki.gg/images/Rare_Affixes_I_Upgrade_Icon.png?63b43a=&format=original' },
+    { name: '', icon: 'https://windblown.wiki.gg/images/Rare_Affixes_II_Upgrade_Icon.png?1b9389=&format=original' },
+    { name: '', icon: 'https://windblown.wiki.gg/images/Rare_Affixes_III_Upgrade_Icon.png?72a677=&format=original' }
   ];
   
   let upgradeHtml = '<div class="upgrade-selection">';
@@ -877,7 +877,7 @@ function initializeUpgradeBoxes() {
            role="button"
            aria-label="${upgrade.name}">
         ${upgrade.icon ? `<img src="${upgrade.icon}" alt="${upgrade.name}">` : ''}
-        <!--<span class="upgrade-box-name">${upgrade.name}</span>-->
+        <span class="upgrade-box-name">${upgrade.name}</span>
       </div>
     `;
   });

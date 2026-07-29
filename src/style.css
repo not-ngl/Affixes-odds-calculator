@@ -371,8 +371,8 @@ small {
 }
 
 .gear-icon {
-    width: 48px;
-    height: 48px;
+    width: 32px;
+    height: 32px;
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
