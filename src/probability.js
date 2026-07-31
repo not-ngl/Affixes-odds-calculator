@@ -320,7 +320,7 @@ window.ProbabilityCalculator = {
         const u =     q *     Nu / S * this.calc3_2(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
         const c = 2 * q * (Nc-2) / S * this.calc3_2(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
         const r =     p              * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
-        const C = 2 * q / S * this.calc3_1(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked-1);
+        const C = 4 * q / S * this.calc3_1(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked-1);
         return r + u + c + C;
       }
       if (NrAsked === 1 && NuAsked === 1) {
