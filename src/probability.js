@@ -236,9 +236,27 @@ window.ProbabilityCalculator = {
     const q2 = 1 - p2;
     const q3 = 1 - p3;
     
-    if (upgrade === 3) { // OMFG
+    if (upgrade === 3) { 
       if (NrAsked === 1) {
-        return p / Nr * ( (1 + q + q*q + q*q*q) + p1*(1 + q + q1 + q*q + q*q1 + q1*q1) + p1*p2*(1 + q + q1 + q2) + p1*p2*p3 );
+        const u =     q *      Nu/S * this.calc3_1(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q *      Nc/S * this.calc3_1(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p * (Nr-1)/Nr * this.calc3_1(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const R = p / Nr;
+        return u + c + r + R;
+      }
+      if (NuAsked === 1) {
+        const u =     q * (Nu-1)/S * this.calc3_1(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q *     Nc/S * this.calc3_1(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p *            this.calc3_1(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const U = q / S;
+        return u + c + r + U;
+      }
+      if (NcAsked === 1) {
+        const u =     q *     Nu/S * this.calc3_1(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q * (Nc-1)/S * this.calc3_1(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p *            this.calc3_1(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const C = 2 * q / S;
+        return u + c + r + C;
       }
     } else { // This section has been verified
       if (NrAsked === 1) return p / Nr;
@@ -260,6 +278,228 @@ window.ProbabilityCalculator = {
   },
 
   /**
+   * 4-slots available, 2-selected
+   * Returns probability of getting the selection made
+   */
+  calc4_2: function(Nr, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked) { 
+    const S = this.getPoolSize(Nc, Nu);
+    const S1 = S - 1;
+    const S2 = S - 2;
+    const S3 = S - 3;
+    const S4 = S - 4;
+    const S5 = S - 5;
+    const S6 = S - 6;
+    const p = (Nr < 1) ? 0 : this.UPGRADE_CONFIG[upgrade].p;
+    const p1 = (Nr < 2) ? 0 : this.UPGRADE_CONFIG[upgrade].p;
+    const p2 = (Nr < 3) ? 0 : this.UPGRADE_CONFIG[upgrade].p;
+    const p3 = (Nr < 4) ? 0 : this.UPGRADE_CONFIG[upgrade].p;
+    const q = 1 - p;
+    const q1 = 1 - p1;
+    const q2 = 1 - p2;
+    const q3 = 1 - p3;
+    
+    if (upgrade === 3) {
+      if (NrAsked === 2) {
+        const u =     q *     Nu / S * this.calc3_2(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q *     Nc / S * this.calc3_2(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p * (Nr-2) /Nr * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const R =     p /Nr * this.calc3_1(Nr-1, Nu, Nc, upgrade, NrAsked-1, NuAsked, NcAsked);
+        return r + u + c + R;
+      }
+      if (NuAsked === 2) {
+        const u =     q * (Nu-2) / S * this.calc3_2(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q *     Nc / S * this.calc3_2(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p *     Nr /Nr * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const U =     q /S * this.calc3_1(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked-1, NcAsked);
+        return r + u + c + U;
+      }
+      if (NcAsked === 2) {
+        const u =     q *     Nu / S * this.calc3_2(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q * (Nc-2) / S * this.calc3_2(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p *     Nr /Nr * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const C = 2 * q / S * this.calc3_1(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked-1);
+        return r + u + c + C;
+      }
+      if (NrAsked === 1 && NuAsked === 1) {
+        const u =     q * (Nu-1) / S * this.calc3_2(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q *     Nc / S * this.calc3_2(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p * (Nr-1) /Nr * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+	const U = 2 * q / S * this.calc3_1(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked-1, NcAsked);
+        const R =     p /Nr * this.calc3_1(Nr-1, Nu, Nc, upgrade, NrAsked-1, NuAsked, NcAsked);
+        return r + u + c + U + R;
+      }
+      if (NrAsked === 1 && NcAsked === 1) {
+        const u =     q *     Nu / S * this.calc3_2(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q * (Nc-1) / S * this.calc3_2(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p * (Nr-1) /Nr * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+	const C = 2 * q / S * this.calc3_1(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked-1);
+        const R =     p /Nr * this.calc3_1(Nr-1, Nu, Nc, upgrade, NrAsked-1, NuAsked, NcAsked);
+        return r + u + c + C + R;
+      }
+      if (NuAsked === 1 && NcAsked === 1) {
+        const u =     q * (Nu-1) / S * this.calc3_2(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q * (Nc-1) / S * this.calc3_2(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p *              this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+	const U =     q / S * this.calc3_1(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked-1, NcAsked);
+        const C = 2 * q / S * this.calc3_1(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked-1);
+        return r + u + c + U + C;
+      }
+    } else {
+      if (NuAsked === 2) {
+        const u =     q * (Nu-2) / S * this.calc3_2(Nr, Nu-1, Nc, 0, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q *     Nc / S * this.calc3_2(Nr, Nu, Nc-1, 0, NrAsked, NuAsked, NcAsked);
+        const r =     p *              this.calc3_2(Nr-1, Nu, Nc, 0, NrAsked, NuAsked, NcAsked);
+	const U = 2 * q / S * this.calc3_1(Nr, Nu-1, Nc, 0, NrAsked, NuAsked-1, NcAsked);
+        return u + c + r + U;
+      }
+      if (NcAsked === 2) {
+        const u =     q *     Nu / S * this.calc3_2(Nr, Nu-1, Nc, 0, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q * (Nc-2) / S * this.calc3_2(Nr, Nu, Nc-1, 0, NrAsked, NuAsked, NcAsked);
+        const r =     p *              this.calc3_2(Nr-1, Nu, Nc, 0, NrAsked, NuAsked, NcAsked);
+	const C = 4 * q / S * this.calc3_1(Nr, Nu, Nc-1, 0, NrAsked, NuAsked, NcAsked-1);
+        return u + c + r + C;
+      }
+      if (NcAsked === 1 && NuAsked === 1) {
+        const u =     q * (Nu-1) / S * this.calc3_2(Nr, Nu-1, Nc, 0, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q * (Nc-1) / S * this.calc3_2(Nr, Nu, Nc-1, 0, NrAsked, NuAsked, NcAsked);
+        const r =     p *              this.calc3_2(Nr-1, Nu, Nc, 0, NrAsked, NuAsked, NcAsked);
+	const C = 2 * q / S * this.calc3_1(Nr, Nu, Nc-1, 0, NrAsked, NuAsked, NcAsked-1);
+	const U =     q / S * this.calc3_1(Nr, Nu-1, Nc, 0, NrAsked, NuAsked-1, NcAsked);
+        return u + c + r + C + U;
+      }
+      if (NrAsked === 1) {
+        return p / Nr * this.calc3_1(Nr-1, Nu, Nc, 0, NrAsked-1, NuAsked, NcAsked);
+      }
+    }
+    return 0;
+  },
+
+
+  /**
+   * 4-slots available, 3-selected
+   * Returns probability of getting the selection made
+   */
+  calc4_3: function(Nr, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked) { 
+    const S = this.getPoolSize(Nc, Nu);
+    const S1 = S - 1;
+    const S2 = S - 2;
+    const S3 = S - 3;
+    const S4 = S - 4;
+    const S5 = S - 5;
+    const S6 = S - 6;
+    const p = (Nr < 1) ? 0 : this.UPGRADE_CONFIG[upgrade].p;
+    const p1 = (Nr < 2) ? 0 : this.UPGRADE_CONFIG[upgrade].p;
+    const p2 = (Nr < 3) ? 0 : this.UPGRADE_CONFIG[upgrade].p;
+    const p3 = (Nr < 4) ? 0 : this.UPGRADE_CONFIG[upgrade].p;
+    const q = 1 - p;
+    const q1 = 1 - p1;
+    const q2 = 1 - p2;
+    const q3 = 1 - p3;
+    
+    if (upgrade === 3) {
+      if (NrAsked === 3) return 6 * p * p1 * p2 / Nr / (Nr-1) / (Nr-2) * (1 + q + q1 + q2);
+      if (NuAsked === 3) {
+        return 6/S/S1/S2 * (q*q*q + q*q*p*q1 + q*p*q1*q1 + p*q1*q1*q1) + 6*q*q*q*q/S * (Nc*(2/S2/S3/S4 + 2/S1/S3/S4 + 2/S1/S2/S4) + 3*(Nu-3)/S1/S2/S3);
+      }
+      if (NcAsked === 3) {
+        return 48/S/S2/S4 * (q*q*q + q*q*p*q1 + q*p*q1*q1 + p*q1*q1*q1) + 48*q*q*q*q/S * (Nu*(1/S1/S3/S5 + 1/S2/S3/S5 + 1/S2/S4/S5) + 6*(Nc-3)/S1/S2/S3);
+      }
+      if (NrAsked === 2 && NuAsked === 1) {
+        const u =     q * (Nu-1) / S * this.calc3_3(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q *     Nc / S * this.calc3_3(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p * (Nr-2) /Nr * this.calc3_3(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+	const U = 2 * q / S * this.calc3_2(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked-1, NcAsked);
+        const R =     p /Nr * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked-1, NuAsked, NcAsked);
+        return r + u + c + U + R;
+      }
+      if (NrAsked === 2 && NcAsked === 1) {
+        const u =     q *     Nu / S * this.calc3_3(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q * (Nc-1) / S * this.calc3_3(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p * (Nr-2) /Nr * this.calc3_3(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+	const C = 2 * q / S * this.calc3_2(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked-1);
+        const R =     p /Nr * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked-1, NuAsked, NcAsked);
+        return r + u + c + C + R;
+      }
+      if (NcAsked === 2 && NrAsked === 1) {
+        const u =     q *     Nu / S * this.calc3_3(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q * (Nc-2) / S * this.calc3_3(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p * (Nr-1) /Nr * this.calc3_3(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+	const C = 2 * q / S * this.calc3_2(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked-1);
+        const R =     p /Nr * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked-1, NuAsked, NcAsked);
+        return r + u + c + C + R;
+      }
+      if (NuAsked === 2 && NrAsked === 1) {
+        const u =     q * (Nu-2) / S * this.calc3_3(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q *     Nc / S * this.calc3_3(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p * (Nr-1) /Nr * this.calc3_3(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+	const U = 2 * q / S * this.calc3_2(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked-1, NcAsked);
+        const R =     p /Nr * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked-1, NuAsked, NcAsked);
+        return r + u + c + U + R;
+      }
+      if (NuAsked === 2 && NcAsked === 1) {
+        const u =     q * (Nu-2) / S * this.calc3_3(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q * (Nc-1) / S * this.calc3_3(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p *              this.calc3_3(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+	const U = 2 * q / S * this.calc3_2(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked-1, NcAsked);
+        const C = 2 * q / S * this.calc3_2(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked-1);
+        return r + u + c + U + C;
+      }
+      if (NcAsked === 2 && NuAsked === 1) {
+        const u =     q * (Nu-1) / S * this.calc3_3(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q * (Nc-2) / S * this.calc3_3(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p *              this.calc3_3(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+	const U =     q / S * this.calc3_2(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked-1, NcAsked);
+        const C = 4 * q / S * this.calc3_2(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked-1);
+        return r + u + c + U + C;
+      }
+      if (NcAsked === 1 && NrAsked === 1 && NuAsked === 1) {
+        const u =     q * (Nu-1) / S * this.calc3_3(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q * (Nc-1) / S * this.calc3_3(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p * (Nr-1) /Nr * this.calc3_3(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+	const U =     q / S * this.calc3_2(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked-1, NcAsked);
+	const C = 2 * q / S * this.calc3_2(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked-1);
+	const R =     p /Nr * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked-1, NuAsked, NcAsked);
+        return u + c + r + U + C + R;
+      }
+    } else {
+      if (NuAsked === 3) {
+        const u =     q * (Nu-3) / S * this.calc3_3(Nr, Nu-1, Nc, 0, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q *     Nc / S * this.calc3_3(Nr, Nu, Nc-1, 0, NrAsked, NuAsked, NcAsked);
+        const r =     p *              this.calc3_3(Nr-1, Nu, Nc, 0, NrAsked, NuAsked, NcAsked);
+	const U = 3 * q / S * this.calc3_2(Nr, Nu-1, Nc, 0, NrAsked, NuAsked-1, NcAsked);
+        return u + c + r + U;
+      }
+      if (NcAsked === 3) {
+        const u =     q *     Nu / S * this.calc3_3(Nr, Nu-1, Nc, 0, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q * (Nc-3) / S * this.calc3_3(Nr, Nu, Nc-1, 0, NrAsked, NuAsked, NcAsked);
+        const r =     p *              this.calc3_3(Nr-1, Nu, Nc, 0, NrAsked, NuAsked, NcAsked);
+	const C = 6 * q / S * this.calc3_2(Nr, Nu, Nc-1, 0, NrAsked, NuAsked, NcAsked-1);
+        return u + c + r + C;
+      }
+      if (NcAsked === 2 && NuAsked === 1) {
+        const u =     q * (Nu-1) / S * this.calc3_3(Nr, Nu-1, Nc, 0, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q * (Nc-2) / S * this.calc3_3(Nr, Nu, Nc-1, 0, NrAsked, NuAsked, NcAsked);
+        const r =     p *              this.calc3_3(Nr-1, Nu, Nc, 0, NrAsked, NuAsked, NcAsked);
+	const C = 4 * q / S * this.calc3_2(Nr, Nu, Nc-1, 0, NrAsked, NuAsked, NcAsked-1);
+	const U =     q / S * this.calc3_2(Nr, Nu-1, Nc, 0, NrAsked, NuAsked-1, NcAsked);
+        return u + c + r + C + U;
+      }
+      if (NuAsked === 2 && NcAsked === 1) {
+        const u =     q * (Nu-2) / S * this.calc3_3(Nr, Nu-1, Nc, 0, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q * (Nc-1) / S * this.calc3_3(Nr, Nu, Nc-1, 0, NrAsked, NuAsked, NcAsked);
+        const r =     p *              this.calc3_3(Nr-1, Nu, Nc, 0, NrAsked, NuAsked, NcAsked);
+	const C = 2 * q / S * this.calc3_2(Nr, Nu, Nc-1, 0, NrAsked, NuAsked, NcAsked-1);
+	const U = 2 * q / S * this.calc3_2(Nr, Nu-1, Nc, 0, NrAsked, NuAsked-1, NcAsked);
+        return u + c + r + C + U;
+      }
+      if (NrAsked === 1) {
+        return p / Nr * this.calc3_2(Nr-1, Nu, Nc, 0, NrAsked-1, NuAsked, NcAsked);
+      }
+    }
+    return 0;
+  },
+
+  /**
    * 4-slots available, 4-selected
    * Returns probability of getting the selection made
    */
@@ -271,8 +511,6 @@ window.ProbabilityCalculator = {
     const S4 = S - 4;
     const S5 = S - 5;
     const S6 = S - 6;
-    const S7 = S - 7;
-    const S8 = S - 8;
     const p = (Nr < 1) ? 0 : this.UPGRADE_CONFIG[upgrade].p;
     const p1 = (Nr < 2) ? 0 : this.UPGRADE_CONFIG[upgrade].p;
     const p2 = (Nr < 3) ? 0 : this.UPGRADE_CONFIG[upgrade].p;
@@ -352,6 +590,10 @@ window.ProbabilityCalculator = {
         return this.calc3_3(Nr, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
       case '4-1':
         return this.calc4_1(Nr, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+      case '4-2':
+        return this.calc4_2(Nr, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+      case '4-3':
+        return this.calc4_3(Nr, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
       case '4-4':
         return this.calc4_4(Nr, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
       default:
