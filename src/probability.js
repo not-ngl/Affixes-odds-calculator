@@ -100,7 +100,8 @@ window.ProbabilityCalculator = {
     const q = 1 - p;
     const q1 = 1 - p1;
     const q2 = 1 - p2;
-    
+   
+    if (Nr < NrAsked) return 0;
     if (upgrade === 3) {
       if (NrAsked === 1) return p / Nr * (1 + p1 + q + p1*p2 + p1*q1 + p1*q + q*q); 
       if (NuAsked === 1) return 1/S * (q + p*q1 + p*p1*q2 + p*q1*q1 + q*q + p*q*q1 + q*q*q);
@@ -131,6 +132,7 @@ window.ProbabilityCalculator = {
     const q1 = 1 - p1;
     const q2 = 1 - p2;
     
+    if (Nr < NrAsked) return 0;
     if (upgrade === 3) {
       if (NrAsked === 2) return 2 * p * p / Nr / (Nr-1) * (1 + 2 * p2 + q1 + q);
       if (NuAsked === 2) return 2/S/S1 * (q*q*p + p*q*q1 + p*q1*q1) + 6*q*q*q/S/S1/S2 * (Nu-2) + 4*q*q*q/S * Nc * (1/S2/S3 + 1/S1/S3 + 1/S1/S2);
@@ -187,6 +189,7 @@ window.ProbabilityCalculator = {
     const q1 = 1 - p1;
     const q2 = 1 - p2;
     
+    if (Nr < NrAsked) return 0;
     if (upgrade === 3) { 
       if (NrAsked === 3) return 6 * p * p1 * p2 / Nr / (Nr-1) / (Nr-2);
       if (NuAsked === 3) return 6 * q * q * q / S / S1 / S2;
@@ -309,14 +312,14 @@ window.ProbabilityCalculator = {
       if (NuAsked === 2) {
         const u =     q * (Nu-2) / S * this.calc3_2(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
         const c = 2 * q *     Nc / S * this.calc3_2(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
-        const r =     p              * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p *     Nr /Nr * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
         const U =     q /S * this.calc3_1(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked-1, NcAsked);
         return r + u + c + U;
       }
       if (NcAsked === 2) {
         const u =     q *     Nu / S * this.calc3_2(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
         const c = 2 * q * (Nc-2) / S * this.calc3_2(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
-        const r =     p              * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p *     Nr /Nr * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
         const C = 2 * q / S * this.calc3_1(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked-1);
         return r + u + c + C;
       }
