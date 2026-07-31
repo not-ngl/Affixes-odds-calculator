@@ -118,7 +118,7 @@ window.ProbabilityCalculator = {
    * 3-slots available, 2-selected
    * Returns probability of getting the selection made (2 affixes selected)
    */
-  calc3_2: function(Nr, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked) {
+  calc3_2: function(Nr, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked) { // This function has been demonstrated to be true
     const S = this.getPoolSize(Nc, Nu);
     const S1 = S - 1;
     const S2 = S - 2;
@@ -133,8 +133,8 @@ window.ProbabilityCalculator = {
     
     if (upgrade === 3) {
       if (NrAsked === 2) return 2 * p * p / Nr / (Nr-1) * (1 + 2 * p2 + q1 + q);
-      if (NuAsked === 2) return 2/S/S1 * (q*q + p*q*q1 + p*q1*q1) + 2*q*q*q/S/S1/S2 * (Nu-2) + 4*q*q*q/S/S3 * Nc * (1/S1 + 1/S2);
-      if (NcAsked === 2) return 8/S/S2 * (q*q + p*q*q1 + p*q1*q1) + 16*q*q*q/S/S2/S4* (Nc-2) + 8*q*q*q/S/S3 * Nu * (1/S1 + 1/S3);
+      if (NuAsked === 2) return 2/S/S1 * (q*q*p + p*q*q1 + p*q1*q1) + 6*q*q*q/S/S1/S2 * (Nu-2) + 4*q*q*q/S * Nc * (1/S2/S3 + 1/S1/S3 + 1/S1/S2);
+      if (NcAsked === 2) return 8/S/S2 * (q*q*p + p*q*q1 + p*q1*q1) + 48*q*q*q/S/S2/S4* (Nc-2) + 8*q*q*q/S * Nu * (1/S1/S3 + 1/S2/S3 + 1/S2/S4);
       if (NrAsked === 1 && NuAsked === 1) {
         return p/Nr/S*(2*p1*q2 + q1 + 2*q1*q1*Nc/S2 + q1*q1*(Nu-1)/S1 + q1*p1 + q + p1*q + q*q + 2*q*q1*Nc/S2 + 2*q*q*Nc/S2 + q*q1*(Nu-1)/S1 + q*q*(Nu-1)/S1);
       }
@@ -147,7 +147,7 @@ window.ProbabilityCalculator = {
         const xcu = 2*q*q*q/S * ((Nu-1) * (1/S2/S1 + 1/S3/S1 + 1/S2/S3) + 2*(Nc-1) * (1/S3/S2 + 1/S4/S2 + 1/S1/S3) + (Nu-2)/S1/S2 + 2*(Nc-2)/S2/S4);
         return r + ucx + xcu;
       }
-    } else {
+    } else { 
       if (NrAsked === 1 && NuAsked === 1) return 2 * p / Nr / S * ( (Nu-1)/S1 + Nc/S1 + Nc/S2 );
       if (NrAsked === 1 && NcAsked === 1) return 2 * p / Nr / S * ( 4*(Nc-1)/S2 + Nu/S2 + Nu/S1 );
       if (NuAsked === 2) {
@@ -187,7 +187,7 @@ window.ProbabilityCalculator = {
     const q1 = 1 - p1;
     const q2 = 1 - p2;
     
-    if (upgrade === 3) {
+    if (upgrade === 3) { 
       if (NrAsked === 3) return 6 * p * p1 * p2 / Nr / (Nr-1) / (Nr-2);
       if (NuAsked === 3) return 6 * q * q * q / S / S1 / S2;
       if (NcAsked === 3) return 48 * q * q * q / S / S2 / S4;
@@ -200,7 +200,7 @@ window.ProbabilityCalculator = {
       if (NuAsked === 1 && NcAsked === 1 && NrAsked === 1) {
         return 2 * (q1*q1 + q*q1 + q*q) * p / Nr / S * ( 1/S1 + 1/S2 );
       }
-    } else {
+    } else { 
       if (NrAsked === 1) {
         if (NuAsked === 2) return 2 * p / Nr / S / S1;
         if (NcAsked === 2) return 8 * p / Nr / S / S2;
@@ -227,8 +227,6 @@ window.ProbabilityCalculator = {
     const S4 = S - 4;
     const S5 = S - 5;
     const S6 = S - 6;
-    const S7 = S - 7;
-    const S8 = S - 8;
     const p = (Nr < 1) ? 0 : this.UPGRADE_CONFIG[upgrade].p;
     const p1 = (Nr < 2) ? 0 : this.UPGRADE_CONFIG[upgrade].p;
     const p2 = (Nr < 3) ? 0 : this.UPGRADE_CONFIG[upgrade].p;
@@ -238,7 +236,7 @@ window.ProbabilityCalculator = {
     const q2 = 1 - p2;
     const q3 = 1 - p3;
     
-    if (upgrade === 3) {
+    if (upgrade === 3) { // OMFG
       if (NrAsked === 1) {
         return p / Nr * ( (1 + q + q*q + q*q*q) + p1*(1 + q + q1 + q*q + q*q1 + q1*q1) + p1*p2*(1 + q + q1 + q2) + p1*p2*p3 );
       }
@@ -265,7 +263,7 @@ window.ProbabilityCalculator = {
    * 4-slots available, 4-selected
    * Returns probability of getting the selection made
    */
-  calc4_4: function(Nr, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked) {
+  calc4_4: function(Nr, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked) { // This function has been demonstrated to be true
     const S = this.getPoolSize(Nc, Nu);
     const S1 = S - 1;
     const S2 = S - 2;
@@ -290,20 +288,20 @@ window.ProbabilityCalculator = {
       if (NcAsked === 4) return 24 * 16 * q * q * q * q / S / S2 / S4 / S6;
       if (NrAsked === 3 && NuAsked === 1) return 6 * p * p1 * p2 / Nr / (Nr-1) / (Nr-2) / S * (q + q1 + q2 + q3);
       if (NrAsked === 3 && NcAsked === 1) return 2 * 6 * p * p1 * p2 / Nr / (Nr-1) / (Nr-2) / S * (q + q1 + q2 + q3);
-      if (NcAsked === 3 && NuAsked === 1) return 48 * q * q * q * q / S * (1/S1/S3/S5 + 1/S2/S3/S5 + 1/S2/S4/S5 + 1/S2/S4/S6);
+      if (NcAsked === 3 && NuAsked === 1) return 48 * q * q * q * q / S * (1/S1/S3/S5 + 1/S2/S3/S5 + 1/S2/S4/S5 + 1/S2/S4/S6);//
       if (NcAsked === 3 && NrAsked === 1) return 48 * p / Nr / S / S2 / S4 * (q1*q1*q1 + q*q1*q1 + q*q*q1 + q*q*q);
-      if (NuAsked === 3 && NcAsked === 1) return 12 * q * q * q * q / S * (1/S2/S3/S4 + 1/S1/S3/S4 + 1/S1/S2/S4 + 1/S1/S2/S3);
+      if (NuAsked === 3 && NcAsked === 1) return 12 * q * q * q * q / S * (1/S2/S3/S4 + 1/S1/S3/S4 + 1/S1/S2/S4 + 1/S1/S2/S3);//
       if (NuAsked === 3 && NrAsked === 1) return 6 * p / Nr / S / S1 / S2 * (q1*q1*q1 + q*q1*q1 + q*q*q1 + q*q*q);
       if (NrAsked === 2 && NcAsked === 2) return 16 * p * p1 / Nr / (Nr - 1) / S / S2 * (q*q + q*q1 + q*q2 + q1*q1 + q1*q2 + q2*q);
       if (NrAsked === 2 && NuAsked === 2) return 4 * p * p1 / Nr / (Nr - 1) / S / S1 * (q*q + q*q1 + q*q2 + q1*q1 + q1*q2 + q2*q);
-      if (NcAsked === 2 && NuAsked === 2) return 16 * q * q * q * q / S * (1/S2/S3/S5 + 1/S2/S3/S4 + 1/S2/S4/S5 + 1/S1/S2/S4 + 1/S1/S3/S4 + 1/S3/S5);
+      if (NcAsked === 2 && NuAsked === 2) return 16 * q * q * q * q / S * (1/S2/S3/S5 + 1/S2/S3/S4 + 1/S2/S4/S5 + 1/S1/S2/S4 + 1/S1/S3/S4 + 1/S1/S3/S5);//
       if (NrAsked === 2 && NuAsked === 1 && NcAsked === 1) {
         return 4 * p * p1 / Nr / (Nr-1) / S * ( q/S2*(q+q1+q2) + q/S1*(q+q1+q2) + q2*q2*(1/S1+1/S2) + q1*(q1+q2)*(1/S1+1/S1) );
       }
       if (NuAsked === 2 && NcAsked === 1 && NrAsked === 1) {
         return 4 * p / Nr / S * (q1*q1*q1 + q*q1*q1 + q*q*q1 + q*q*q) * (1/S2/S3 + 1/S1/S3 + 1/S1/S2);
       }
-      if (NcAsked === 2 && NrAsked === 1 && NcAsked === 1) {
+      if (NcAsked === 2 && NrAsked === 1 && NuAsked === 1) {
         return 8 * p / Nr / S * (q1*q1*q1 + q*q1*q1 + q*q*q1 + q*q*q) * (1/S1/S3 + 1/S2/S3 + 1/S2/S4);
       }
     } else {
@@ -313,11 +311,11 @@ window.ProbabilityCalculator = {
       if (NuAsked === 3 && NcAsked === 1) return 12 * q / S * (1/S2/S3/S4 + 1/S1/S3/S4 + 1/S1/S2/S4 + 1/S1/S2/S3);
       if (NcAsked === 3 && NrAsked === 1) return 48 * p / Nr / S / S2 / S4;
       if (NuAsked === 3 && NrAsked === 1) return 6 * p / Nr / S / S1 / S2;
-      if (NcAsked === 2 && NuAsked === 2) return 16 * q / S * (1/S2/S3/S5 + 1/S2/S3/S4 + 1/S2/S4/S5 + 1/S1/S2/S4 + 1/S1/S3/S4 + 1/S3/S5);
+      if (NcAsked === 2 && NuAsked === 2) return 16 * q / S * (1/S2/S3/S5 + 1/S2/S3/S4 + 1/S2/S4/S5 + 1/S1/S2/S4 + 1/S1/S3/S4 + 1/S1/S3/S5);
       if (NuAsked === 2 && NcAsked === 1 && NrAsked === 1) {
         return 4 * p / Nr / S * (1/S2/S3 + 1/S1/S3 + 1/S1/S2);
       }
-      if (NcAsked === 2 && NrAsked === 1 && NcAsked === 1) {
+      if (NcAsked === 2 && NrAsked === 1 && NuAsked === 1) {
         return 8 * p / Nr / S * (1/S1/S3 + 1/S2/S3 + 1/S2/S4);
       }
     }
@@ -348,8 +346,8 @@ window.ProbabilityCalculator = {
         return this.calc2_2(Nr, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
       case '3-1':
         return this.calc3_1(Nr, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
-//      case '3-2':
-//        return this.calc3_2(Nr, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+      case '3-2':
+        return this.calc3_2(Nr, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
       case '3-3':
         return this.calc3_3(Nr, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
       case '4-1':
