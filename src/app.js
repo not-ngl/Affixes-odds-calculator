@@ -78,20 +78,27 @@ function parseCustomTooltip(baseValue, tooltipText, currentLevel) {
   if (!levelMatch) return baseValue;
 
   const thresholdLevel = parseInt(levelMatch[1]);
-  const incrementMatch = tooltipText.match(/([\+\-]\d+)/);
+
+  // Support decimal numbers (?:\.\d+)?
+  const incrementMatch = tooltipText.match(/([\+\-]\d+(?:\.\d+)?)/);
   if (!incrementMatch) return baseValue;
 
-  const perLevelIncrement = parseInt(incrementMatch[1]);
-  const baseNumMatch = baseValue.match(/([\+\-]?\d+)/);
+  // Support decimal: parseFloat
+  const perLevelIncrement = parseFloat(incrementMatch[1]);
+
+  const baseNumMatch = baseValue.match(/([\+\-]?\d+(?:\.\d+)?)/);
   if (!baseNumMatch) return baseValue;
 
-  const baseNum = parseInt(baseNumMatch[1]);
+  const baseNum = parseFloat(baseNumMatch[1]);
 
   if (currentLevel > thresholdLevel) {
     const additionalValue = (currentLevel - thresholdLevel) * perLevelIncrement;
-    const total = baseNum + additionalValue;
+    const total = Math.round((baseNum + additionalValue) * 100) / 100; // second decimal place
     const sign = total >= 0 ? '+' : '';
-    const suffix = baseValue.replace(/[\+\-]?\d+/g, '');
+
+    // Replace the matched number
+    const suffix = baseValue.replace(baseNumMatch[0], '');
+
     return sign + total + suffix;
   }
 

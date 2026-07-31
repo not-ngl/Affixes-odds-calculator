@@ -214,9 +214,15 @@ body {
 }
 
 /* ========== FORM ELEMENTS ========== */
-small {
+/*small {
     color: var(--wiki-content-text-mix-color);
     display: block;
+}*/
+sup, small {
+  display: inline;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
 }
 
 .form-row {
