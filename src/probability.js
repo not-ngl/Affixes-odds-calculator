@@ -312,14 +312,14 @@ window.ProbabilityCalculator = {
       if (NuAsked === 2) {
         const u =     q * (Nu-2) / S * this.calc3_2(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
         const c = 2 * q *     Nc / S * this.calc3_2(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
-        const r =     p *     Nr /Nr * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p              * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
         const U =     q /S * this.calc3_1(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked-1, NcAsked);
         return r + u + c + U;
       }
       if (NcAsked === 2) {
         const u =     q *     Nu / S * this.calc3_2(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
         const c = 2 * q * (Nc-2) / S * this.calc3_2(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
-        const r =     p *     Nr /Nr * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p              * this.calc3_2(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
         const C = 2 * q / S * this.calc3_1(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked-1);
         return r + u + c + C;
       }
@@ -402,10 +402,18 @@ window.ProbabilityCalculator = {
     if (upgrade === 3) {
       if (NrAsked === 3) return 6 * p * p1 * p2 / Nr / (Nr-1) / (Nr-2) * (1 + q + q1 + q2);
       if (NuAsked === 3) {
-        return 6/S/S1/S2 * (q*q*q + q*q*p*q1 + q*p*q1*q1 + p*q1*q1*q1) + 6*q*q*q*q/S * (Nc*(2/S2/S3/S4 + 2/S1/S3/S4 + 2/S1/S2/S4) + 3*(Nu-3)/S1/S2/S3);
+        const u =     q * (Nu-3) / S * this.calc3_3(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q *     Nc / S * this.calc3_3(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p *              this.calc3_3(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+	const U = 3 * q / S * this.calc3_2(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked-1, NcAsked);
+        return r + u + c + U;
       }
       if (NcAsked === 3) {
-        return 48/S/S2/S4 * (q*q*q + q*q*p*q1 + q*p*q1*q1 + p*q1*q1*q1) + 48*q*q*q*q/S * (Nu*(1/S1/S3/S5 + 1/S2/S3/S5 + 1/S2/S4/S5) + 6*(Nc-3)/S1/S2/S3);
+        const u =     q *     Nu / S * this.calc3_3(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+        const c = 2 * q * (Nc-3) / S * this.calc3_3(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked);
+        const r =     p *              this.calc3_3(Nr-1, Nu, Nc, upgrade, NrAsked, NuAsked, NcAsked);
+	const C = 6 * q / S * this.calc3_2(Nr, Nu, Nc-1, upgrade, NrAsked, NuAsked, NcAsked-1);
+        return r + u + c + C;
       }
       if (NrAsked === 2 && NuAsked === 1) {
         const u =     q * (Nu-1) / S * this.calc3_3(Nr, Nu-1, Nc, upgrade, NrAsked, NuAsked, NcAsked);
