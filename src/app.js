@@ -101,7 +101,9 @@ function parseCustomTooltip(baseValue, tooltipText, currentLevel) {
 function cleanWikiText(text, currentLevel) {
   text = text.replace(/\{\{CustomTooltip\|([^|]+)\|([^}]+)\}\}/g, 
     (match, baseValue, tooltipText) => parseCustomTooltip(baseValue, tooltipText, currentLevel));
-  text = text.replace(/\{\{[^|]+\|([^|}\n]+)(?:\|[^}]*)?\}\}/g, '$1');
+  text.replace(/\{\{[^}]+\|([^{]*)?(?:\|([^{]*))?\}\}/g, (match, arg1, arg2) => {
+    return arg2 !== undefined ? arg2.trim() : (arg1 ? arg1.trim() : match);
+  });
   return text;
 }
 
