@@ -81,6 +81,8 @@ const Settings = (function() {
 
     // Initialize
     init() {
+      const urlChanged = setLangFromURL();
+
       // Restore language
       const savedLang = localStorage.getItem(LANG_STORAGE_KEY);
       if (savedLang && UI_STRINGS[savedLang]) {
@@ -138,6 +140,10 @@ function setupLanguageToggle() {
 
       Settings.setLang(newLang);
       updateLangUI();
+      
+      const url = new URL(window.location);
+      url.searchParams.set('lang', newLang);
+      history.pushState({}, '', url);
 
       if (typeof setupThemeToggle === 'function') {
         const themeBtn = document.getElementById('themeToggleBtn');
@@ -170,6 +176,21 @@ function setupLanguageToggle() {
       }
     });
   });
+}
+
+function getLangFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const lang = params.get('lang');
+  return ['en', 'fr'].includes(lang) ? lang : null;
+}
+
+function setLangFromURL() {
+  const urlLang = getLangFromURL();
+  if (urlLang && urlLang !== currentLang) {
+    setLang(urlLang);
+    return true;
+  }
+  return false;
 }
 
 function updateLangUI() {
