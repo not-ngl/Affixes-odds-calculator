@@ -83,10 +83,10 @@ function parseCustomTooltip(baseValue, tooltipText, currentLevel) {
   if (!incrementMatch) return baseValue;
 
   const perLevelIncrement = parseFloat(incrementMatch[1].replace(',', '.'));
-  const baseNumMatch = baseValue.match(/([\+\-]?\d+(?:\.\d+)?)/);
+  const baseNumMatch = baseValue.match(/([\+\-]?\d+(?:[,.]\d+)?)/);
   if (!baseNumMatch) return baseValue;
 
-  const baseNum = parseFloat(baseNumMatch[1]);
+  const baseNum = parseFloat(baseNumMatch[1].replace(',', '.'));
 
   if (currentLevel > thresholdLevel) {
     const total = Math.round((baseNum + (currentLevel - thresholdLevel) * perLevelIncrement) * 100) / 100;
