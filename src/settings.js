@@ -56,6 +56,21 @@ const Settings = (function() {
     }
   }
 
+  function getLangFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    const lang = params.get('lang');
+    return ['en', 'fr'].includes(lang) ? lang : null;
+  }
+  
+  function setLangFromURL() {
+    const urlLang = getLangFromURL();
+    if (urlLang && urlLang !== currentLang) {
+      setLang(urlLang);
+      return true;
+    }
+    return false;
+  }
+
   function getCurrentTheme() {
     return document.documentElement.classList.contains('view-light') ? 'light' : 'dark';
   }
@@ -178,20 +193,7 @@ function setupLanguageToggle() {
   });
 }
 
-function getLangFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  const lang = params.get('lang');
-  return ['en', 'fr'].includes(lang) ? lang : null;
-}
 
-function setLangFromURL() {
-  const urlLang = getLangFromURL();
-  if (urlLang && urlLang !== currentLang) {
-    setLang(urlLang);
-    return true;
-  }
-  return false;
-}
 
 function updateLangUI() {
   const label = document.getElementById('langLabel');
