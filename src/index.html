@@ -4,6 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Windblown's Affix Calculator</title>
+  <script>
+  (function() {
+    const savedTheme = localStorage.getItem('windblownCalculatorTheme');
+    if (savedTheme) {
+      document.documentElement.classList.add(savedTheme === 'light' ? 'view-light' : 'view-dark');
+    } else {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.classList.add(prefersDark ? 'view-dark' : 'view-light');
+    }
+  })();
+  </script>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
 </head>
@@ -12,6 +23,18 @@
     <div class="logo-container">
       <img src="./assets/wac-logo.png" alt="Windblown's affixes calculator" style="height:40px; margin-top:6px" />
     </div>
+
+    <div class="lang-toggle">
+      <button id="langToggleBtn" class="lang-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Switch language">
+        <span id="langLabel" class="lang-label">EN</span>
+        <span class="dropdown-arrow">▼</span>
+      </button>
+      <div id="langDropdown" class="lang-dropdown" role="listbox" hidden>
+        <button type="button" class="lang-option" data-lang="en" role="option" aria-selected="true">English</button>
+        <button type="button" class="lang-option" data-lang="fr" role="option" aria-selected="false">Français</button>
+      </div>
+    </div>
+
     <div class="theme-toggle">
       <button id="themeToggleBtn" class="theme-btn" aria-label="Toggle theme">
         <span class="theme-label">Switch to Light</span>
@@ -65,16 +88,13 @@
 	<span id="resultRerolls" class="result-rerolls"></span>
       </div>
       <div class="copyright-notice">
-        © Motion Twin •
-        Icons & data from <a href="https://windblown.wiki.gg/" target="_blank" rel="noopener">Windblown Wiki</a>
-        (<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>) •
-        Made by ngl
       </div>
     </div>
     
     <!-- Results -->
     <div id="result" class="result-container"></div>
   </div>
+  <script src="settings.js"></script>
   <script src="probability.js"></script>
   <script src="app.js"></script>
 </body>

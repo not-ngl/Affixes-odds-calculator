@@ -1,6 +1,6 @@
 {
   "name": "WAC",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A web UI for calculating affix probability combinations in Windblown.",
   "main": "src/app.js",
   "scripts": {

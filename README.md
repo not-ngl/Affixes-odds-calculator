@@ -1,6 +1,6 @@
 # Windblown's Affix Calculator
 
-A web UI for calculating affix combination probabilities for Windblown.
+A web UI for calculating affix combination probabilities for Windblown. Supports multiple languages (as long as the wiki modules exist, and an UI translation is provided)
 
 ## Live Demo
 

@@ -2,7 +2,7 @@ name: Fetch Wiki Data
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # Daily at 6 UTC
+    - cron: '0 6 * * 0'  # Sunday at 6 UTC
   workflow_dispatch:
 
 jobs:
@@ -18,5 +18,5 @@ jobs:
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Auto-update wiki data"
+          commit_message: "[weekly] Auto-update wiki data"
           file_pattern: "data/*.json"

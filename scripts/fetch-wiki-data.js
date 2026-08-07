@@ -1,6 +1,11 @@
 const fs = require('fs');
 const luaparse = require('luaparse');
 
+const LANGUAGES = [
+  { code: 'en', wikiUrl: 'https://windblown.wiki.gg/', moduleNames: { weapons: 'Module:Weapons/Data', trinkets: 'Module:Trinkets/Data', affixes: 'Module:Affixes/Data' } },
+  { code: 'fr', wikiUrl: 'https://windblown.wiki.gg/fr/', moduleNames: { weapons: 'Module:Armes/Data', trinkets: 'Module:Reliques/Data', affixes: 'Module:Affixes/Data' } }
+];
+
 const fetchWikiModule = async (wikiUrl, moduleName) => {
   const apiUrl = `${wikiUrl}/api.php?action=query&titles=${moduleName}&prop=revisions&rvprop=content&format=json&redirects=1`;
   console.log(`API URL: ${apiUrl}`);
@@ -93,31 +98,35 @@ function astToJson(table) {
 }
 
 async function updateData() {
-  const wikiUrl = 'https://windblown.wiki.gg/';
-  
-  console.log('Fetching Module:Weapons/Data...');
-  const weaponsLua = await fetchWikiModule(wikiUrl, 'Module:Weapons/Data');
-  if (weaponsLua) {
-    const weaponsData = await luaToJson(weaponsLua);  
-    fs.writeFileSync('data/weapons.json', JSON.stringify(weaponsData, null, 2));
-    console.log('Saved weapons.json');
-  }
+  for (const lang of LANGUAGES) {
+    const suffix = lang.code === 'en' ? '' : `-${lang.code}`;
+    console.log(`\n=== Fetching ${lang.code.toUpperCase()} data ===`);
 
-  console.log('Fetching Module:Trinkets/Data...');
-  const trinketsLua = await fetchWikiModule(wikiUrl, 'Module:Trinkets/Data');
-  if (trinketsLua) {
-    const trinketsData = await luaToJson(trinketsLua); 
-    fs.writeFileSync('data/trinkets.json', JSON.stringify(trinketsData, null, 2));
-    console.log('Saved trinkets.json');
-  }
+    // Weapons
+    const weaponsLua = await fetchWikiModule(lang.wikiUrl, lang.moduleNames.weapons);
+    if (weaponsLua) {
+      const json = await luaToJson(weaponsLua);
+      fs.writeFileSync(`data/weapons${suffix}.json`, JSON.stringify(json, null, 2));
+      console.log(`Saved weapons${suffix}.json`);
+    }
 
-  console.log('Fetching Module:Affixes/Data...');
-  const affixesLua = await fetchWikiModule(wikiUrl, 'Module:Affixes/Data');
-  if (affixesLua) {
-    const affixesData = await luaToJson(affixesLua);
-    fs.writeFileSync('data/affixes.json', JSON.stringify(affixesData, null, 2));
-    console.log('Saved affixes.json');
+    // Trinkets
+    const trinketsLua = await fetchWikiModule(lang.wikiUrl, lang.moduleNames.trinkets);
+    if (trinketsLua) {
+      const json = await luaToJson(trinketsLua);
+      fs.writeFileSync(`data/trinkets${suffix}.json`, JSON.stringify(json, null, 2));
+      console.log(`Saved trinkets${suffix}.json`);
+    }
+
+    // Affixes
+    const affixesLua = await fetchWikiModule(lang.wikiUrl, lang.moduleNames.affixes);
+    if (affixesLua) {
+      const json = await luaToJson(affixesLua);
+      fs.writeFileSync(`data/affixes${suffix}.json`, JSON.stringify(json, null, 2));
+      console.log(`Saved affixes${suffix}.json`);
+    }
   }
+  console.log('\nAll languages fetched.');
 }
 
 updateData();
