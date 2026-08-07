@@ -477,7 +477,8 @@ function updateAffixDisplay() {
         const customValue = original[customValueKey];
         const customValueArray = customValue?.__array || customValue || [];
         if (customValueArray[gearIndex] !== undefined) {
-          desc = desc.replace(/''x''/g, customValueArray[gearIndex]);
+          const locale = Settings.getLang() === 'fr' ? 'fr-FR' : 'en-US';
+          desc = desc.replace(/''x''/g, customValueArray[gearIndex].toLocaleString(locale));
         }
       }
       
